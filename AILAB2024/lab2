@@ -1,0 +1,60 @@
+
+room_A = int(input("enter the state"))
+room_B =  int(input("enter the state"))
+current_location = 'A'  
+
+goal_state = ['A', 0, 'B', 0]
+
+total_cost = 0
+
+# Step 4: Define a function to clean the room
+def clean_room():
+    global room_A, room_B, current_location, total_cost
+    
+    # Check the current location
+    if current_location == 'A':
+        print("Vacuum is placed in Location A")
+        if room_A == 1:
+            print("Location A is Dirty")
+            print("Cleaning Location A...")
+            room_A = 0  # Clean the room
+            total_cost += 2  
+            print("Location A has been Cleaned")
+            print("COST for SUCK in Location A: 2 units")
+        else:
+            print("Location A is already clean")
+        
+        # Move to Location B (no cost for moving)
+        print("Moving right to Location B")
+        current_location = 'B'
+        
+    if current_location == 'B':
+        print("Vacuum is placed in Location B")
+        if room_B == 1:
+            print("Location B is Dirty")
+            print("Cleaning Location B...")
+            room_B = 0  # Clean the room
+            total_cost += 2  # Cost of cleaning (SUCK action)
+            print("Location B has been Cleaned")
+            print("COST for SUCK in Location B: 2 units")
+        else:
+            print("Location B is already clean")
+
+# Step 5: Keep checking for the goal state
+def check_goal_state():
+    if room_A == goal_state[1] and room_B == goal_state[3]:
+        print("Both rooms are clean! Goal state reached:", goal_state)
+        return True  # Goal state reached, stop the vacuum cleaner
+    else:
+        clean_room()  # Continue cleaning until the goal state is reached
+        return False
+
+# Step 6: Run the vacuum cleaner
+goal_reached = False  # A flag to track if the goal is reached
+
+while not goal_reached:  # Loop until the goal state is reached
+    goal_reached = check_goal_state()
+
+# Final output after cleaning
+print("Final goal state:", goal_state)
+print("Total cost incurred:", total_cost, "units")
